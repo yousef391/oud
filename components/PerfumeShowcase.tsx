@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { perfumes } from "@/data/perfumes";
 import algeriaData from "@/data/algeria.json";
@@ -16,15 +16,12 @@ function getDeliveryPrice(wilayaId: number) {
 }
 
 const PerfumeShowcase: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showForm, setShowForm] = useState(false);
   const [selectedWilaya, setSelectedWilaya] = useState("");
   const [selectedCommune, setSelectedCommune] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
-  const animating = useRef(false);
 
-  const perfume = perfumes[currentIndex];
+  const perfume = perfumes[0];
   
   const communesForWilaya = selectedWilaya ? algeriaData.communes.filter(c => c.wilaya_id.toString() === selectedWilaya) : [];
   const deliveryPrice = selectedWilaya ? getDeliveryPrice(parseInt(selectedWilaya)) : 0;
@@ -73,7 +70,6 @@ const PerfumeShowcase: React.FC = () => {
         }
 
         setTimeout(() => {
-          setShowForm(false);
           setOrderSuccess(false);
         }, 3000);
       } else {
@@ -87,19 +83,6 @@ const PerfumeShowcase: React.FC = () => {
     }
   };
 
-  const handleAddToCartClick = () => {
-    setShowForm(true);
-    type FBQ = (action: string, event: string, params?: Record<string, unknown>) => void;
-    if (typeof window !== "undefined" && (window as unknown as { fbq?: FBQ }).fbq) {
-      ((window as unknown as { fbq: FBQ }).fbq)('track', 'AddToCart', {
-        currency: 'DZD',
-        value: productPrice,
-        content_name: perfume.name,
-        content_category: perfume.productType,
-        content_type: 'product',
-      });
-    }
-  };
 
   return (
     <motion.div
