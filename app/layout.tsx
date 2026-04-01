@@ -15,9 +15,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "NOVA — Premium Streetwear",
-  description:
-    "Elevate your everyday with premium streetwear and tech-focused utility apparel. Lookbook and shop.",
+  title: "Persian Oud — Collection Privée",
+  description: "Experience the luxurious woody oriental fragrance of Persian Oud. Long-lasting, elegant, and perfectly balanced for those seeking premium scent.",
 };
 
 export default function RootLayout({
@@ -50,6 +49,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} ${dmSans.variable} antialiased`}>
         {children}
         <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             height="1"
             width="1"
